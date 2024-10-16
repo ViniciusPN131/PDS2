@@ -1,80 +1,76 @@
-package br.com.loja.Assistec.view;
+package br.com.loja.assistec.view;
 
-import java.awt.EventQueue;
-
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
-import javax.swing.SpringLayout;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
-@SuppressWarnings("serial")
+import br.com.loja.assistec.controller.LoginController;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 public class LoginView extends JFrame {
-	public JTextField txtUsuario;
-	public JPasswordField txtSenha;
-	public JLabel lblStatus;
-	public JButton btnLogin;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginView frame = new LoginView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
+	private static final long serialVersionUID = 1L;
+	private JTextField txtLogin;
+	private JPasswordField txtSenha;
+	private JButton btnLogin;
+	private JLabel lblStatus;
+	private JLabel lblLogin;
+	private JLabel lblSenha;
+
+	public LoginView() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				LoginController lc = new LoginController();
+				if (lc.verificarBancoOnline()) {
+					lblStatus.setIcon(new javax.swing.ImageIcon(
+							getClass().getResource("/br/com/loja/assistec/icones/dbok.png")));
+				} else {
+					lblStatus.setIcon(new javax.swing.ImageIcon(
+							getClass().getResource("/br/com/loja/assistec/icones/dberror.png")));
 				}
 			}
 		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public LoginView() {
 		setBounds(100, 100, 450, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		SpringLayout springLayout = new SpringLayout();
-		getContentPane().setLayout(springLayout);
+		setTitle("ASSISTEC - LOGIN");
 
-		JLabel lblUsuario = new JLabel("Usuario");
-		springLayout.putConstraint(SpringLayout.NORTH, lblUsuario, 80, SpringLayout.NORTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, lblUsuario, 94, SpringLayout.WEST, getContentPane());
-		getContentPane().add(lblUsuario);
+		// Inicializa todos elementos gráficos
 
-		JLabel lblSenha = new JLabel("Senha");
-		springLayout.putConstraint(SpringLayout.NORTH, lblSenha, 17, SpringLayout.SOUTH, lblUsuario);
-		springLayout.putConstraint(SpringLayout.WEST, lblSenha, 0, SpringLayout.WEST, lblUsuario);
-		getContentPane().add(lblSenha);
-
-		txtUsuario = new JTextField();
-		springLayout.putConstraint(SpringLayout.NORTH, txtUsuario, 0, SpringLayout.NORTH, lblUsuario);
-		springLayout.putConstraint(SpringLayout.WEST, txtUsuario, 29, SpringLayout.EAST, lblUsuario);
-		getContentPane().add(txtUsuario);
-		txtUsuario.setColumns(10);
-
-		btnLogin = new JButton("Login");
-		springLayout.putConstraint(SpringLayout.NORTH, btnLogin, 71, SpringLayout.SOUTH, txtUsuario);
-		springLayout.putConstraint(SpringLayout.EAST, btnLogin, 0, SpringLayout.EAST, txtUsuario);
-		getContentPane().add(btnLogin);
-
-		lblStatus = new JLabel("");
-		springLayout.putConstraint(SpringLayout.NORTH, lblStatus, 19, SpringLayout.SOUTH, btnLogin);
-		springLayout.putConstraint(SpringLayout.WEST, lblStatus, 10, SpringLayout.WEST, getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, lblStatus, -25, SpringLayout.SOUTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, lblStatus, 184, SpringLayout.WEST, lblUsuario);
-		getContentPane().add(lblStatus);
-
+		lblLogin = new JLabel();
+		lblLogin.setBounds(102, 63, 53, 14);
+		lblSenha = new JLabel();
+		lblSenha.setBounds(102, 102, 64, 14);
+		txtLogin = new JTextField();
+		txtLogin.setBounds(176, 60, 127, 20);
 		txtSenha = new JPasswordField();
-		springLayout.putConstraint(SpringLayout.NORTH, txtSenha, 17, SpringLayout.SOUTH, txtUsuario);
-		springLayout.putConstraint(SpringLayout.WEST, txtSenha, 0, SpringLayout.WEST, txtUsuario);
-		springLayout.putConstraint(SpringLayout.EAST, txtSenha, 0, SpringLayout.EAST, txtUsuario);
+		txtSenha.setBounds(176, 98, 128, 22);
+		btnLogin = new JButton();
+
+		btnLogin.setBounds(179, 155, 76, 23);
+
+		lblStatus = new JLabel();
+		lblStatus.setBounds(10, 213, 63, 37);
+
+		lblLogin.setText("Login");
+		lblSenha.setText("Senha");
+		btnLogin.setText("Entrar");
+
+		getRootPane().setDefaultButton(btnLogin);
+		getContentPane().setLayout(null);
+		getContentPane().add(lblStatus);
+		getContentPane().add(btnLogin);
+		getContentPane().add(lblSenha);
+		getContentPane().add(lblLogin);
 		getContentPane().add(txtSenha);
+		getContentPane().add(txtLogin);
 
 	}
+
+
+
 }
